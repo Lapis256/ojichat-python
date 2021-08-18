@@ -1,7 +1,7 @@
 package main
  
 // #include <Python.h>
-// int PyArg_ParseTuple_Uii(PyObject*, PyObject**, int*, int*);
+// int PyArg_ParseTupleAndKeywords_Uii(PyObject*, PyObject*, PyObject**, int*, int*);
 import "C"
 import "fmt"
 import "unsafe"
@@ -14,13 +14,14 @@ func pyString(str string) *C.PyObject {
 	return ret
 }
 
-func parseArgs(args *C.PyObject) (generator.Config, error) {
+func parseArgs(args *C.PyObject, kwargs *C.PyObject) (generator.Config, error) {
 	var obj *C.PyObject = pyString("")
 	num := C.int(4)
 	level := C.int(0)
-	if C.PyArg_ParseTuple_Uii(args, &obj, &num, &level) == 0 {
+	if C.PyArg_ParseTupleAndKeywords_Uii(args, kwargs, &obj, &num, &level) == 0 {
 		return generator.Config{"", 0, 0}, fmt.Errorf("")
 	}
+	
 	bytes := C.PyUnicode_AsUTF8String(obj)
 	name := C.GoString(C.PyBytes_AsString(bytes))
 	C.Py_DecRef(bytes)
@@ -28,8 +29,8 @@ func parseArgs(args *C.PyObject) (generator.Config, error) {
 }
 
 //export generate
-func generate(self *C.PyObject, args *C.PyObject) *C.PyObject {
-	config, err := parseArgs(args)
+func generate(self *C.PyObject, args *C.PyObject, kwargs *C.PyObject) *C.PyObject {
+	config, err := parseArgs(args, kwargs)
 	if err != nil {
 		return nil
 	}

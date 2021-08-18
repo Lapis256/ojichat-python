@@ -2,15 +2,16 @@
 
 PyObject* generate(PyObject* , PyObject*);
 
-int PyArg_ParseTuple_Uii(PyObject* args, PyObject** a, int* b, int* c) {
-    return PyArg_ParseTuple(args, "|Uii", a, b, c);
+int PyArg_ParseTupleAndKeywords_Uii(PyObject* args, PyObject* kwargs, PyObject** a, int* b, int* c) {
+    static char *kwlist[] = {"name", "num", "level", NULL};
+    return PyArg_ParseTupleAndKeywords(args, kwargs, "|Uii", kwlist, a, b, c);
 }
 
 static struct PyMethodDef methods[] = {
     {
         "generate",
         (PyCFunction)generate,
-        METH_VARARGS,
+        METH_VARARGS | METH_KEYWORDS,
         "おじさんの文言を生成します"
     },
     {NULL, NULL, 0, NULL}

@@ -6,7 +6,7 @@ ojichatのPythonラッパーです
 import ojichat
 
 ojichat.generate()
-# => <何かしらのおじさんの文言>
+# => 何かしらのおじさんの文言
 ```
 ```py
 def generate(name: str = "", num: int = 4, level: int = 0) -> str:

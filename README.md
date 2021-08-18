@@ -26,7 +26,7 @@ def generate(name: str = "", num: int = 4, level: int = 0) -> str:
 
 # インストール
 ```
-pip install git+https://github.com/Lapis256/ojichat-python
+pip install ojichat
 ```
 ### 必要な物
 - Python 3.6 以上

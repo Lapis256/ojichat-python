@@ -1,0 +1,2 @@
+# ojichat-python
+ojichatのPythonラッパーです
